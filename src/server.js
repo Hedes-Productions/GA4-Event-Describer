@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const { authenticate } = require('./auths/oauth2');
 
 const app = express();
 
@@ -9,8 +10,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
 
-app.listen(PORT, () => {
-    console.log('Server started on port 3000')    
-});
+const scopes = [
+    'https://www.googleapis.com/auth/analytics.readonly'
+  ];
+
+authenticate(scopes);
