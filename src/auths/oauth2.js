@@ -24,6 +24,7 @@ exports.authenticate = async (scopes) => {
         if (req.url.indexOf('/oauth2callback') > -1) {
           const qs = new url.URL(req.url, 'http://localhost:3000').searchParams;
           const { tokens } = await oauth2Client.getToken(qs.get('code'));
+          console.log(tokens)
           oauth2Client.setCredentials(tokens);
           res.end('Authentication successful! Please return to the console.');
           serverInstance.destroy();
