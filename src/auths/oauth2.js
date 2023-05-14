@@ -14,7 +14,7 @@ exports.authURLGenerator = async (scopes) => {
     access_type: "offline",
     scope: scopes,
   });
-  open(authorizeUrl, { wait: false }).then((cp) => cp.unref());
+  return authorizeUrl;
 };
 
 exports.getToken = async (code) => {

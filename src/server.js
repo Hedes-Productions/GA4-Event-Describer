@@ -16,17 +16,9 @@ app.use(cors());
 
 const PORT = process.env.PORT || 3000;
 
-const scopes = ["https://www.googleapis.com/auth/analytics.readonly"];
+const oauthLoginRoute = require('./routes/oauth.routes')
+app.use('/oauthlogin', oauthLoginRoute)
 
 app.listen(PORT, () => {
-  authURLGenerator(scopes);
   console.log(`Server running at http://localhost:${PORT}`);
-});
-
-app.get("/oauth2callback", async (req, res) => {
-  const code = req.query.code;
-  const token = await getToken(code);
-  setAccessToken(token);
-  handleAccessToken();
-  res.end("Authentication successful! Please return to the console.");
 });
