@@ -9,7 +9,7 @@ const oauth2Client = new google.auth.OAuth2(
 );
 
 exports.authURLGenerator = async (scopes) => {
-  const { default: open } = await import("open");
+  const apis = google.getSupportedAPIs();
   const authorizeUrl = oauth2Client.generateAuthUrl({
     access_type: "offline",
     scope: scopes,
@@ -29,7 +29,26 @@ exports.setAccessToken = (tokens) => {
 exports.handleAccessToken = () => {
   const credentials = oauth2Client.credentials;
   if (credentials) {
-    console.log(credentials.refresh_token);
+    // console.log(credentials.refresh_token);
   }
-  console.log(credentials.access_token);
+  // console.log(credentials.access_token);
+};
+
+exports.getAnalyticsAllEvents = async() => {
+  const analytics = google.analyticsdata({
+    version: 'v1beta',
+    auth: oauth2Client,
+  });
+
+  const response = await analytics.properties.runReport({
+    requestBody: {
+      "dimensions": [{ "name": "eventName" }],
+      // "metrics": [{ "name": "eventCount" }],
+      "dateRanges": [{ "startDate": "365daysAgo", "endDate": "today" }]
+    },
+    "property": `properties/358151583`
+  });
+  response.data.rows[0].dimensionValues.map((dimensionValue)=>{
+    console.log(dimensionValue)
+  })
 };
