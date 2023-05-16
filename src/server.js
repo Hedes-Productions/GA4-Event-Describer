@@ -1,12 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const {
-  authURLGenerator,
-  getToken,
-  handleAccessToken,
-  setAccessToken,
-} = require("./auths/oauth2");
 
 const app = express();
 
