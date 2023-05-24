@@ -1,7 +1,10 @@
-const { getAnalyticsAllEvents } = require("../auths/oauth2")
+const { getAnalyticsAllEvents } = require("../services/oauth2Service")
 
 
 
 exports.getAllGAEvents = async (req, res, next) => {
-  await getAnalyticsAllEvents();
+  const gaEventList = await getAnalyticsAllEvents();
+  res.status(200).json({
+    gaEventList: gaEventList
+  })
 }
