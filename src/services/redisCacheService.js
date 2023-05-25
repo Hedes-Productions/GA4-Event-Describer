@@ -1,11 +1,20 @@
 const {redisClient} = require('../clients/redis.client');
 
-exports.radisClientConnect = async () => {
-  redisClient.on("error", (err) => res.send(400).json({ error: err }));
-  await redisClient.connect();
+exports.radisClientConnect = async (req,res) => {
+  try {
+    await redisClient.connect();
+  } catch (error) {
+    console.log(error)
+  }
 };
 
 exports.storeInCache = async (key, value) => {
-  await redisClient.set(key, value);
+  try {
+    await redisClient.set(key, value);
+    console.log('Stored in cache')
+  } catch (error) {
+    console.log(error)
+  }
+  
 }
 

@@ -22,26 +22,12 @@ exports.setAccessToken = (tokens) => {
 
 exports.storeOAuthAccessToken = async() => {
   const credentials = oauth2Client.credentials;
+  console.log(credentials)
   if (credentials) {
     storeInCache('oauthRefreshToken',credentials.refresh_token)
   }
   storeInCache('oauthAccessToken',credentials.access_token);
 };
-
-exports.validateOAuthAccessToken = async()=>{
-  const OAuthRefreshToken = await redisClient.get('oauthRefreshToken');
-  if (!OAuthRefreshToken){
-    res.status(400).json({error: 'Login again'})
-  }
-  try {
-    oauth2Client.setCredentials({
-      refresh_token: OAuthRefreshToken
-    });
-  } catch (error) {
-    res.status(400).json({error: 'Token setting failed'})
-  }
-  
-}
 
 exports.getAnalyticsAllEvents = async () => {
   const analytics = google.analyticsdata({
