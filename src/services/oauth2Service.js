@@ -1,7 +1,6 @@
 const { google } = require("googleapis");
 const { storeInCache } = require("./redisCacheService");
 const { oauth2Client } = require("../clients/oauth.client");
-const { redisClient } = require("../clients/redis.client");
 
 exports.authURLGenerator = async (scopes) => {
   const authorizeUrl = oauth2Client.generateAuthUrl({
